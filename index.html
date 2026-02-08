@@ -20,7 +20,6 @@
             overflow: hidden; 
         }
 
-        /* เอฟเฟกต์ระเบิดสีม่วง (พื้นหลังที่ซ่อนอยู่) */
         .purple-overlay {
             position: fixed; top: 50%; left: 50%;
             width: 10px; height: 10px;
@@ -43,37 +42,28 @@
             align-items: center; position: relative; z-index: 10;
         }
 
-        /* โซนโลโก้ (เพิ่มความพรีเมียมด้วยเส้นขอบเรืองแสงวิ่งรอบ) */
         .logo-wrapper { 
             width: 140px; height: 140px; margin-bottom: 30px; 
             position: relative; border-radius: 50%; 
-            padding: 5px; /* พื้นที่ให้เส้นขอบวิ่ง */
-            display: flex; align-items: center; justify-content: center;
-            overflow: hidden;
-            background: #fff;
+            padding: 5px; display: flex; align-items: center; justify-content: center;
+            overflow: hidden; background: #fff;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             transition: all 0.5s ease;
         }
 
-        /* เส้นเรืองแสงหมุนรอบโลโก้ */
         .logo-wrapper::before {
-            content: '';
-            position: absolute;
-            width: 150%; height: 150%;
+            content: ''; position: absolute; width: 150%; height: 150%;
             background: conic-gradient(transparent, transparent, var(--accent-purple), transparent);
             animation: rotate-border 3s linear infinite;
         }
 
-        @keyframes rotate-border {
-            100% { transform: rotate(360deg); }
-        }
+        @keyframes rotate-border { 100% { transform: rotate(360deg); } }
 
         .logo-img { 
             width: 100%; height: 100%; object-fit: cover; 
             border-radius: 50%; z-index: 2; background: white;
         }
 
-        /* อนิเมชั่นหมุนและย่อขยายตอนจะระเบิด */
         .logo-active-anim { 
             animation: premiumSpin 1.2s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards; 
         }
@@ -87,9 +77,9 @@
         .white-text { color: white !important; transition: all 0.5s; text-shadow: 0 2px 10px rgba(0,0,0,0.2); }
 
         .loader { 
-            width: 30px; height: 30px; 
-            border: 3px solid #f3f3f3; border-top: 3px solid var(--primary-green); 
-            border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 15px; 
+            width: 30px; height: 30px; border: 3px solid #f3f3f3; 
+            border-top: 3px solid var(--primary-green); border-radius: 50%; 
+            animation: spin 1s linear infinite; margin-bottom: 15px; 
         }
 
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -105,7 +95,7 @@
 
     <div class="container">
         <div class="logo-wrapper" id="logoWrapper">
-            <img src="STP.png" alt="Logo" class="logo-img">
+            <img src="https://res.cloudinary.com/dqh6keq54/image/upload/v1770554009/STP_b0llmn.png" alt="Logo" class="logo-img">
         </div>
         <div id="loader" class="loader"></div>
         <h1 id="mainTitle">Smart Tech Premium</h1>
@@ -119,33 +109,19 @@
         const mainTitle = document.getElementById('mainTitle');
         const burstOverlay = document.getElementById('burstOverlay');
 
-        // ส่วนเชื่อมต่อ Google Sheets
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwiUqpR7callxaydSRZR6c_iCEdQiATncDug8As3It0tl6nmltSCd2RfrV1p4dErZSnHQ/exec";
-        const urlParams = new URLSearchParams(window.location.search);
-        const locName = urlParams.get('loc') || "จุดแตะทั่วไป";
-
-        // 1. ส่งข้อมูลทันที (Autoplay ในตัว)
-        fetch(`${SCRIPT_URL}?loc=${encodeURIComponent(locName)}`, { mode: 'no-cors', keepalive: true });
-
-        // 2. ลำดับเหตุการณ์อัตโนมัติตามเวลา
         setTimeout(() => {
-            // จังหวะเริ่มเตรียมระเบิด
             loader.classList.add('hidden');
             burstOverlay.classList.add('active-burst');
             logoWrapper.classList.add('logo-active-anim');
-
-            // เปลี่ยนสีข้อความตามพื้นหลังม่วง
             statusText.classList.add('white-text');
             mainTitle.classList.add('white-text');
-            
             statusText.innerText = "กำลังย้ายท่านไปยังเพจ";
             statusText.style.fontWeight = "bold";
-        }, 2000); // รอโหลด 2 วินาที
+        }, 2000); 
 
-        // 3. เปลี่ยนหน้าอัตโนมัติ
         setTimeout(() => {
             window.location.replace("https://m.facebook.com/sswsmarttech/");
-        }, 4000); // รวมเวลาทั้งหมด 4 วินาที
+        }, 4000);
     </script>
 </body>
 </html>
